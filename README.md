@@ -25,6 +25,8 @@
 
 ### Jenkins Pipeline Design
 
+**Pipeline is triggered automatically on code push and pull request events.**
+
 **Pipeline Stages:**
 
 1. Checkout source code
@@ -59,12 +61,13 @@
 
 ### Rollback Strategy
 
-* Each build produces a **versioned Docker image**
+* Each build produces a **versioned Docker image (e.g., sync-service:v1.0.1)**
 * Previous stable versions are retained in the registry
-* In case of failure:
 
-  * Redeploy the last stable image
-  * Or use rollout rollback (in Kubernetes)
+**In case of failure:**
+
+* Redeploy the last stable image
+* Or use Kubernetes rollout rollback
 
 This ensures quick recovery with minimal downtime.
 
@@ -108,6 +111,7 @@ This keeps code environment-independent.
 * Ensures zero or minimal downtime
 * Gradual replacement of old instances with new ones
 * Supports health checks and automatic rollback
+* Uses **readiness and liveness probes** to ensure only healthy pods receive traffic
 
 ---
 
@@ -122,10 +126,10 @@ This keeps code environment-independent.
 * Supports rolling deployments
 * Suitable for multi-environment workloads
 
-Compared to alternatives:
+**Comparison:**
 
 * Cloud Run → simpler but less control
-* Compute Engine → more operational overhead
+* Compute Engine → higher operational overhead
 
 ---
 
@@ -146,7 +150,8 @@ Reduces operational overhead compared to self-hosted databases.
 
 * Application is deployed inside a **private VPC**
 * Only the **Load Balancer** is publicly accessible
-* Traffic flow:
+
+**Traffic Flow:**
 
 User → Load Balancer (HTTPS) → GKE Ingress → Application Pods
 
@@ -179,6 +184,8 @@ Security is implemented at multiple levels:
 
 * Alerts configured for failures and anomalies
 
+* Alerts integrated with notification channels (email/Slack) for faster response
+
 ---
 
 ### Cost Optimization
@@ -195,12 +202,16 @@ Security is implemented at multiple levels:
 This design focuses on:
 
 * Safe and controlled deployments
-* Scalability using Kubernetes
+* Scalable infrastructure using Kubernetes
 * Strong security practices
-* Cost-efficient infrastructure
+* Cost-efficient architecture
+
+The approach ensures the application can be deployed reliably while maintaining high availability and operational efficiency.
+
+---
 
 ## Architecture Diagram
 
 ![Architecture](architecture-diagram.png)
 
-The approach ensures the application can be deployed reliably while maintaining high availability and operational efficiency.
+![Architecture](architecture-diagram.png)
