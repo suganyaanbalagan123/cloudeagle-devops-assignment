@@ -199,4 +199,8 @@ This design focuses on:
 * Strong security practices
 * Cost-efficient infrastructure
 
+## Architecture Diagram
+
+![Architecture](architecture-diagram.png)
+
 The approach ensures the application can be deployed reliably while maintaining high availability and operational efficiency.
